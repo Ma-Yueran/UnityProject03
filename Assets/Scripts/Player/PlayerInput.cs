@@ -42,7 +42,7 @@ public class PlayerInput : MonoBehaviour
         {
             playerState.currentState = State.MOVE;
         }
-        else
+        else if (playerState.currentState != State.DAMAGED)
         {
             playerState.currentState = State.IDLE;
         }
