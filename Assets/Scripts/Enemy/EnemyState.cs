@@ -1,28 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-/// <summary>
-/// The animation states.
-/// </summary>
-public enum State
-{
-    IDLE,
-    MOVE,
-    DAMAGED
-}
-
-/// <summary>
-/// The state of player's weapon.
-/// </summary>
-public enum WeaponState
-{
-    UNARMED,
-    ARMED_SWORD
-}
-
-/// <summary>
-/// The states of the player's character.
-/// </summary>
-public class PlayerState : MonoBehaviour
+public class EnemyState : MonoBehaviour
 {
     public State currentState;
 

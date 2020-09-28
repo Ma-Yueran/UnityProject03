@@ -146,14 +146,14 @@ public class PlayerController : CharacterController
     {
         SetState(State.DAMAGED);
 
-        Vector3 damage = new Vector3(-Mathf.Tan(angle * Mathf.Deg2Rad), 0, 1).normalized * power;
+        Vector3 hit = new Vector3(-Mathf.Tan(angle * Mathf.Deg2Rad), 0, 1).normalized * power;
         if (Mathf.Abs(angle) > 90)
         {
-            damage *= -1;
+            hit *= -1;
         }
 
-        playerAnimator.SetFloat("HitH", damage.x);
-        playerAnimator.SetFloat("HitV", damage.z);
+        playerAnimator.SetFloat("HitH", hit.x);
+        playerAnimator.SetFloat("HitV", hit.z);
 
         if (playerState.CanBlock(angle, power))
         {
@@ -161,12 +161,12 @@ public class PlayerController : CharacterController
         }
         else
         {
-            playerState.currentHP -= damage.sqrMagnitude;
+            playerState.currentHP -= hit.sqrMagnitude;
 
             playerAnimator.SetBool("Block", false);
         }
 
-        AddForce(damage);
+        playerRigidBody.AddRelativeForce(-hit, ForceMode.Impulse);
     }
 
     /// <summary>
