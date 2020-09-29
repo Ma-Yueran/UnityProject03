@@ -138,5 +138,10 @@ public class EnemyController : CharacterController
         }
 
         AddForce(-hit, true);
+
+        if (enemyInventory.currentWeapon != null)
+        {
+            enemyInventory.currentWeapon.isActive = false;
+        }
     }
 }

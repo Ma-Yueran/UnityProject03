@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa1d1fb405fdde5438e2952a3bae9721, type: 3}
   m_Name: PlayerArmedWalkHorizontal
   m_EditorClassIdentifier: 
-  speedForward: 4
-  speedBackward: 3
+  speedForward: 3
+  speedBackward: 2.5
   speedGraph:
     serializedVersion: 2
     m_Curve:

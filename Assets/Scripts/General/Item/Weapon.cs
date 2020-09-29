@@ -27,6 +27,11 @@ public class Weapon : MonoBehaviour
         {
             return;
         }
+
+        if (other.GetComponent<Weapon>() != null || other.GetComponent<CharacterController>() != null)
+        {
+            return;
+        }
         
         CharacterController hitCharacter = other.GetComponentInParent<CharacterController>();
 

@@ -9,6 +9,11 @@ public class EnemyAI : MonoBehaviour
 
     public float distance;
 
+    public float attackIntervalMax;
+    public float attackIntercalMin;
+
+    private float lastAttackTime;
+
     private EnemyMovement enemyMovement;
 
     private EnemyState enemyState;
@@ -26,13 +31,17 @@ public class EnemyAI : MonoBehaviour
     {
         enemyState.weaponState = WeaponState.ARMED_SWORD;
 
+        if (enemyState.currentState == State.DAMAGED)
+        {
+            return;
+        }
+
         if (!IsCloseEnough())
         {
             enemyState.currentState = State.MOVE;
         }
-        else
+        else if (Time.time > lastAttackTime + Random.Range(attackIntercalMin, attackIntervalMax))
         {
-            enemyState.currentState = State.IDLE;
             Attack();
         }
     }
@@ -72,5 +81,7 @@ public class EnemyAI : MonoBehaviour
         {
             enemyState.attack = false;
         }
+
+        lastAttackTime = Time.time;
     }
 }

@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// The controller for the player's character.
-/// </summary>
+[RequireComponent(typeof(PlayerState))]
+[RequireComponent(typeof(PlayerMovement))]
+[RequireComponent(typeof(PlayerInventory))]
+[RequireComponent(typeof(PlayerBody))]
 public class PlayerController : CharacterController
 {
     public Camera playerCamera;
@@ -113,5 +114,10 @@ public class PlayerController : CharacterController
         }
 
         AddForce(-hit, true);
+
+        if (playerInventory.currentWeapon != null)
+        {
+            playerInventory.currentWeapon.isActive = false;
+        }
     }
 }

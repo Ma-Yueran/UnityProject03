@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af1a639f79b8a5e4c9dd1d698ff94b0e, type: 3}
   m_Name: PlayerActivateAttack 0
   m_EditorClassIdentifier: 
-  activeTime: 0.2
+  activeTime: 0
   unactiveTime: 0.6
   attackPower: 4

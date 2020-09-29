@@ -38,11 +38,16 @@ public class PlayerInput : MonoBehaviour
 
     private void UpdatePlayerCurrentState()
     {
+        if (playerState.currentState == State.DAMAGED)
+        {
+            return;
+        }
+
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
             playerState.currentState = State.MOVE;
         }
-        else if (playerState.currentState != State.DAMAGED)
+        else
         {
             playerState.currentState = State.IDLE;
         }
