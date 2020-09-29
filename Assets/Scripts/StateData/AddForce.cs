@@ -11,11 +11,13 @@ public class AddForce : StateData
 
     public Vector3 force;
 
+    public bool isRelative;
+
     public override void OnEnter(CharacterController controller, Animator animator, AnimatorStateInfo stateInfo)
     {
         if (onEnter)
         {
-            controller.AddForce(force);
+            controller.AddForce(force, isRelative);
         }
     }
 
@@ -23,7 +25,7 @@ public class AddForce : StateData
     {
         if (onExit)
         {
-            controller.AddForce(force);
+            controller.AddForce(force, isRelative);
         }
     }
 }

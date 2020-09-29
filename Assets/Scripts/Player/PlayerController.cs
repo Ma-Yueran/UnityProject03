@@ -44,43 +44,21 @@ public class PlayerController : CharacterController
         playerAnimator.SetFloat("HP", playerState.currentHP);
     }
 
-    /// <summary>
-    /// Moves the character horizontally.
-    /// </summary>
-    /// <param name="speed">the moving speed</param>
-    /// <param name="controllable">is the moving controllable by the horizontal input</param>
     public override void MoveHorizontal(float speedForward, float speedBackward, bool controllable)
     {
         playerMovement.MoveHorizontal(speedForward, speedBackward, controllable);
     }
 
-    /// <summary>
-    /// Moves the character vertically.
-    /// </summary>
-    /// <param name="speed">the moving speed</param>
-    /// <param name="controllable">is the moving controllable by the vertical input</param>
     public override void MoveVertical(float speedForward, float speedBackward, bool controllable)
     {
         playerMovement.MoveVertical(speedForward, speedBackward, controllable);
     }
 
-    /// <summary>
-    /// Rotates the character along y-axis.
-    /// </summary>
-    /// <param name="speed">the rotation speed</param>
-    /// <param name="controllable">is the rotation controllable</param>
     public override void Rotate(float speed, bool controllable)
     {
         playerMovement.Rotate(speed, controllable);
     }
 
-    /// <summary>
-    /// Equips the item to the body part.
-    /// </summary>
-    /// <param name="itemName">the name of the item</param>
-    /// <param name="bodyPartName">the name of the body part</param>
-    /// <param name="localPosition">the local position of the item</param>
-    /// <param name="localRotation">the local rotation of the item</param>
     public override void Equip(string itemName, string bodyPartName, Vector3 localPosition, Vector3 localRotation)
     {
         Item item = playerInventory.GetItem(itemName);
@@ -91,19 +69,11 @@ public class PlayerController : CharacterController
         item.transform.localEulerAngles = localRotation;
     }
 
-    /// <summary>
-    /// Sets the Transit value of the animator.
-    /// </summary>
-    /// <param name="value">the value for Transit</param>
     public override void SetTransit(bool value)
     {
         playerAnimator.SetBool("Transit", value);
     }
 
-    /// <summary>
-    /// Sets the current weapon to be the weapon with the given name.
-    /// </summary>
-    /// <param name="weaponName">the name of the weapon</param>
     public override void SetWeapon(string weaponName)
     {
         if (weaponName.Equals("null"))
@@ -116,10 +86,6 @@ public class PlayerController : CharacterController
         }
     }
 
-    /// <summary>
-    /// Sets the activation of the current weapon.
-    /// </summary>
-    /// <param name="isActive">is the weapon going to be active</param>
     public override void SetWeaponActive(bool isActive, float attackPower)
     {
         if (playerInventory.currentWeapon != null)
@@ -129,19 +95,11 @@ public class PlayerController : CharacterController
         }
     }
 
-    /// <summary>
-    /// Sets the current state of the character.
-    /// </summary>
-    /// <param name="state">the state</param>
     public override void SetState(State state)
     {
         playerState.currentState = state;
     }
 
-    /// <summary>
-    /// Takes damage.
-    /// </summary>
-    /// <param name="damage">the damage</param>
     public override void TakeDamage(float angle, float power)
     {
         SetState(State.DAMAGED);
@@ -166,30 +124,26 @@ public class PlayerController : CharacterController
             playerAnimator.SetBool("Block", false);
         }
 
-        playerRigidBody.AddRelativeForce(-hit, ForceMode.Impulse);
+        AddForce(-hit, true);
     }
 
-    /// <summary>
-    /// Adds a force to the character.
-    /// </summary>
-    /// <param name="force">the force</param>
-    public override void AddForce(Vector3 force)
+    public override void AddForce(Vector3 force, bool isRelative)
     {
-        playerRigidBody.AddForce(force, ForceMode.Impulse);
+        if (!isRelative)
+        {
+            playerRigidBody.AddForce(force, ForceMode.Impulse);
+        } 
+        else
+        {
+            playerRigidBody.AddRelativeForce(force, ForceMode.Impulse);
+        }
     }
 
-    /// <summary>
-    /// Gets the AnimationProgess object.
-    /// </summary>
-    /// <returns>the AnimationProgress</returns>
     public override AnimationProgress GetAnimationProgress()
     {
         return playerAnimationProgess;
     }
 
-    /// <summary>
-    /// Removes the current force on the character.
-    /// </summary>
     public override void TurnOffPhysics()
     {
         playerRigidBody.isKinematic = true;

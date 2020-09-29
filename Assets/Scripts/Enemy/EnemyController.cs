@@ -84,9 +84,15 @@ public class EnemyController : CharacterController
         }
     }
 
-    public override void AddForce(Vector3 force)
+    public override void AddForce(Vector3 force, bool isRelative)
     {
-        enemyRigidbody.AddForce(force, ForceMode.Impulse);
+        if (!isRelative)
+        {
+            enemyRigidbody.AddForce(force, ForceMode.Impulse);
+        } else
+        {
+            enemyRigidbody.AddRelativeForce(force, ForceMode.Impulse);
+        }
     }
 
     public override void Equip(string itemName, string bodyPartName, Vector3 localPosition, Vector3 localRotation)
@@ -113,11 +119,7 @@ public class EnemyController : CharacterController
     {
         enemyAnimator.SetBool("Transit", value);
     }
-
-    /// <summary>
-    /// Sets the current weapon to be the weapon with the given name.
-    /// </summary>
-    /// <param name="weaponName">the name of the weapon</param>
+    
     public override void SetWeapon(string weaponName)
     {
         if (weaponName.Equals("null"))
@@ -163,7 +165,7 @@ public class EnemyController : CharacterController
             enemyAnimator.SetBool("Block", false);
         }
 
-        enemyRigidbody.AddRelativeForce(hit, ForceMode.Impulse);
+        AddForce(-hit, true);
     }
 
     public override void TurnOffPhysics()
