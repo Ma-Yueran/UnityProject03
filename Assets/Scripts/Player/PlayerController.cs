@@ -16,32 +16,25 @@ public class PlayerController : CharacterController
 
     private PlayerBody playerBody;
 
-    private Animator playerAnimator;
-
-    private Rigidbody playerRigidBody;
-
-    private AnimationProgress playerAnimationProgess;
-
     private void Start()
     {
+        InitializeController();
+
         playerState = GetComponent<PlayerState>();
         playerMovement = GetComponent<PlayerMovement>();
         playerInventory = GetComponent<PlayerInventory>();
         playerBody = GetComponent<PlayerBody>();
-        playerAnimator = GetComponentInChildren<Animator>();
-        playerRigidBody = GetComponent<Rigidbody>();
-        playerAnimationProgess = new AnimationProgress();
     }
 
     private void Update()
     {
-        playerAnimator.SetInteger("State", playerState.getCurrentState());
-        playerAnimator.SetInteger("WeaponState", playerState.getWeaponState());
-        playerAnimator.SetFloat("InputH", playerState.inputH);
-        playerAnimator.SetFloat("InputV", playerState.inputV);
-        playerAnimator.SetBool("Run", playerState.run);
-        playerAnimator.SetBool("Attack", playerState.attack);
-        playerAnimator.SetFloat("HP", playerState.currentHP);
+        characterAnimator.SetInteger("State", playerState.getCurrentState());
+        characterAnimator.SetInteger("WeaponState", playerState.getWeaponState());
+        characterAnimator.SetFloat("InputH", playerState.inputH);
+        characterAnimator.SetFloat("InputV", playerState.inputV);
+        characterAnimator.SetBool("Run", playerState.run);
+        characterAnimator.SetBool("Attack", playerState.attack);
+        characterAnimator.SetFloat("HP", playerState.currentHP);
     }
 
     public override void MoveHorizontal(float speedForward, float speedBackward, bool controllable)
@@ -67,11 +60,6 @@ public class PlayerController : CharacterController
         item.transform.SetParent(bodyPart);
         item.transform.localPosition = localPosition;
         item.transform.localEulerAngles = localRotation;
-    }
-
-    public override void SetTransit(bool value)
-    {
-        playerAnimator.SetBool("Transit", value);
     }
 
     public override void SetWeapon(string weaponName)
@@ -110,47 +98,20 @@ public class PlayerController : CharacterController
             hit *= -1;
         }
 
-        playerAnimator.SetFloat("HitH", hit.x);
-        playerAnimator.SetFloat("HitV", hit.z);
+        characterAnimator.SetFloat("HitH", hit.x);
+        characterAnimator.SetFloat("HitV", hit.z);
 
         if (playerState.CanBlock(angle, power))
         {
-            playerAnimator.SetBool("Block", true);
+            characterAnimator.SetBool("Block", true);
         }
         else
         {
             playerState.currentHP -= hit.sqrMagnitude;
 
-            playerAnimator.SetBool("Block", false);
+            characterAnimator.SetBool("Block", false);
         }
 
         AddForce(-hit, true);
-    }
-
-    public override void AddForce(Vector3 force, bool isRelative)
-    {
-        if (!isRelative)
-        {
-            playerRigidBody.AddForce(force, ForceMode.Impulse);
-        } 
-        else
-        {
-            playerRigidBody.AddRelativeForce(force, ForceMode.Impulse);
-        }
-    }
-
-    public override AnimationProgress GetAnimationProgress()
-    {
-        return playerAnimationProgess;
-    }
-
-    public override void TurnOffPhysics()
-    {
-        playerRigidBody.isKinematic = true;
-        Collider[] colliders = GetComponentsInChildren<Collider>();
-        foreach (Collider collider in colliders)
-        {
-            collider.enabled = false;
-        }
     }
 }

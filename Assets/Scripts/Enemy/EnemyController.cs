@@ -19,33 +19,26 @@ public class EnemyController : CharacterController
 
     private EnemyAI enemyAI;
 
-    private Animator enemyAnimator;
-
-    private Rigidbody enemyRigidbody;
-
-    private AnimationProgress enemyAnimationProgress;
-
     private void Start()
     {
+        InitializeController();
+
         enemyMovement = GetComponent<EnemyMovement>();
         enemyState = GetComponent<EnemyState>();
         enemyBody = GetComponent<EnemyBody>();
         enemyInventory = GetComponent<EnemyInventory>();
         enemyAI = GetComponent<EnemyAI>();
-        enemyAnimator = GetComponentInChildren<Animator>();
-        enemyRigidbody = GetComponent<Rigidbody>();
-        enemyAnimationProgress = new AnimationProgress();
     }
 
     private void Update()
     {
-        enemyAnimator.SetInteger("State", enemyState.getCurrentState());
-        enemyAnimator.SetInteger("WeaponState", enemyState.getWeaponState());
-        enemyAnimator.SetFloat("InputH", enemyState.inputH);
-        enemyAnimator.SetFloat("InputV", enemyState.inputV);
-        enemyAnimator.SetBool("Attack", enemyState.attack);
-        enemyAnimator.SetBool("Block", enemyState.block);
-        enemyAnimator.SetFloat("HP", enemyState.currentHP);
+        characterAnimator.SetInteger("State", enemyState.getCurrentState());
+        characterAnimator.SetInteger("WeaponState", enemyState.getWeaponState());
+        characterAnimator.SetFloat("InputH", enemyState.inputH);
+        characterAnimator.SetFloat("InputV", enemyState.inputV);
+        characterAnimator.SetBool("Attack", enemyState.attack);
+        characterAnimator.SetBool("Block", enemyState.block);
+        characterAnimator.SetFloat("HP", enemyState.currentHP);
     }
 
     public override void MoveHorizontal(float speedForward, float speedBackward, bool controllable)
@@ -84,17 +77,6 @@ public class EnemyController : CharacterController
         }
     }
 
-    public override void AddForce(Vector3 force, bool isRelative)
-    {
-        if (!isRelative)
-        {
-            enemyRigidbody.AddForce(force, ForceMode.Impulse);
-        } else
-        {
-            enemyRigidbody.AddRelativeForce(force, ForceMode.Impulse);
-        }
-    }
-
     public override void Equip(string itemName, string bodyPartName, Vector3 localPosition, Vector3 localRotation)
     {
         Item item = enemyInventory.GetItem(itemName);
@@ -105,19 +87,9 @@ public class EnemyController : CharacterController
         item.transform.localEulerAngles = localRotation;
     }
 
-    public override AnimationProgress GetAnimationProgress()
-    {
-        return enemyAnimationProgress;
-    }
-
     public override void SetState(State state)
     {
         enemyState.currentState = state;
-    }
-
-    public override void SetTransit(bool value)
-    {
-        enemyAnimator.SetBool("Transit", value);
     }
     
     public override void SetWeapon(string weaponName)
@@ -151,31 +123,20 @@ public class EnemyController : CharacterController
             hit *= -1;
         }
 
-        enemyAnimator.SetFloat("HitH", hit.x);
-        enemyAnimator.SetFloat("HitV", hit.z);
+        characterAnimator.SetFloat("HitH", hit.x);
+        characterAnimator.SetFloat("HitV", hit.z);
 
         if (enemyState.CanBlock(angle, power))
         {
-            enemyAnimator.SetBool("Block", true);
+            characterAnimator.SetBool("Block", true);
         }
         else
         {
             enemyState.currentHP -= hit.sqrMagnitude;
 
-            enemyAnimator.SetBool("Block", false);
+            characterAnimator.SetBool("Block", false);
         }
 
         AddForce(-hit, true);
-    }
-
-    public override void TurnOffPhysics()
-    {
-        enemyRigidbody.isKinematic = true;
-
-        Collider[] colliders = GetComponentsInChildren<Collider>();
-        foreach(Collider collider in colliders)
-        {
-            collider.enabled = false;
-        }
     }
 }

@@ -2,6 +2,19 @@
 
 public abstract class CharacterController : MonoBehaviour
 {
+    protected AnimationProgress animationProgress;
+
+    protected Animator characterAnimator;
+
+    protected Rigidbody characterRigidbody;
+
+    protected void InitializeController()
+    {
+        animationProgress = new AnimationProgress();
+        characterAnimator = GetComponentInChildren<Animator>();
+        characterRigidbody = GetComponent<Rigidbody>();
+    }
+
     /// <summary>
     /// Moves the character vertically.
     /// </summary>
@@ -38,7 +51,10 @@ public abstract class CharacterController : MonoBehaviour
     /// Sets the "Transit" value of the animator of the character.
     /// </summary>
     /// <param name="value">the value</param>
-    public abstract void SetTransit(bool value);
+    public virtual void SetTransit(bool value)
+    {
+        characterAnimator.SetBool("Transit", value);
+    }
 
     /// <summary>
     /// Sets the current weapon of the character.
@@ -71,16 +87,37 @@ public abstract class CharacterController : MonoBehaviour
     /// </summary>
     /// <param name="force">the force</param>
     /// <param name="isRelative">is the force relative</param>
-    public abstract void AddForce(Vector3 force, bool isRelative);
+    public virtual void AddForce(Vector3 force, bool isRelative)
+    {
+        if (!isRelative)
+        {
+            characterRigidbody.AddForce(force, ForceMode.Impulse);
+        }
+        else
+        {
+            characterRigidbody.AddRelativeForce(force, ForceMode.Impulse);
+        }
+    }
 
     /// <summary>
     /// Gets the AnimationProgress of the character.
     /// </summary>
     /// <returns>the AnimationProgress</returns>
-    public abstract AnimationProgress GetAnimationProgress();
+    public virtual AnimationProgress GetAnimationProgress()
+    {
+        return animationProgress;
+    }
 
     /// <summary>
     /// Turns off all physics of the character.
     /// </summary>
-    public abstract void TurnOffPhysics();
+    public virtual void TurnOffPhysics()
+    {
+        characterRigidbody.isKinematic = true;
+        Collider[] colliders = GetComponentsInChildren<Collider>();
+        foreach (Collider collider in colliders)
+        {
+            collider.enabled = false;
+        }
+    }
 }
