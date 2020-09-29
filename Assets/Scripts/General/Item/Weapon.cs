@@ -27,11 +27,6 @@ public class Weapon : MonoBehaviour
         {
             return;
         }
-
-        if (other.GetComponent<Weapon>() != null || other.GetComponent<CharacterController>() != null)
-        {
-            return;
-        }
         
         CharacterController hitCharacter = other.GetComponentInParent<CharacterController>();
 
@@ -47,7 +42,6 @@ public class Weapon : MonoBehaviour
             float sign = Mathf.Sign(Vector3.Dot(-hitCharacter.transform.forward, directionRight));
 
             float finalAngle = angle * sign;
-
             hitCharacter.TakeDamage(finalAngle, attackPower);
             isActive = false;
         }

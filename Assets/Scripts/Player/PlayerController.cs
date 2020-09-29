@@ -36,6 +36,8 @@ public class PlayerController : CharacterController
         characterAnimator.SetBool("Run", playerState.run);
         characterAnimator.SetBool("Attack", playerState.attack);
         characterAnimator.SetFloat("HP", playerState.currentHP);
+
+        ControlVelocity();
     }
 
     public override void MoveHorizontal(float speedForward, float speedBackward, bool controllable)

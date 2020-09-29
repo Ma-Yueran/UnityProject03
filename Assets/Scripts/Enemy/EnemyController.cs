@@ -36,9 +36,11 @@ public class EnemyController : CharacterController
         characterAnimator.SetInteger("WeaponState", enemyState.getWeaponState());
         characterAnimator.SetFloat("InputH", enemyState.inputH);
         characterAnimator.SetFloat("InputV", enemyState.inputV);
+        characterAnimator.SetBool("Run", enemyState.run);
         characterAnimator.SetBool("Attack", enemyState.attack);
-        characterAnimator.SetBool("Block", enemyState.block);
         characterAnimator.SetFloat("HP", enemyState.currentHP);
+
+        ControlVelocity();
     }
 
     public override void MoveHorizontal(float speedForward, float speedBackward, bool controllable)

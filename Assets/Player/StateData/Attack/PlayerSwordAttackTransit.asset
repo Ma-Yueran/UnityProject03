@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 303752a362e0d2d489b0c8cd3c8be358, type: 3}
   m_Name: PlayerSwordAttackTransit
   m_EditorClassIdentifier: 
-  transitionTime: 0.75
+  transitionTime: 0.3

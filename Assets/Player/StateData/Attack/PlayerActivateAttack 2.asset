@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeTime: 0
   unactiveTime: 0.7
-  attackPower: 6
+  attackPower: 4

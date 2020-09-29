@@ -71,8 +71,6 @@ public class EnemyAI : MonoBehaviour
 
     private void Attack()
     {
-        enemyState.currentState = State.IDLE;
-
         if (IsCloseEnough())
         {
             enemyState.attack = true;

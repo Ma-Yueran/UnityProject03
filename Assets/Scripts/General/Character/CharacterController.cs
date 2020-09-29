@@ -2,6 +2,8 @@
 
 public abstract class CharacterController : MonoBehaviour
 {
+    public float velocityLimit;
+
     protected AnimationProgress animationProgress;
 
     protected Animator characterAnimator;
@@ -118,6 +120,17 @@ public abstract class CharacterController : MonoBehaviour
         foreach (Collider collider in colliders)
         {
             collider.enabled = false;
+        }
+    }
+
+    /// <summary>
+    /// Reduces the character's velocity when it gets larger that the limit.
+    /// </summary>
+    public void ControlVelocity()
+    {
+        if (characterRigidbody.velocity.sqrMagnitude > velocityLimit)
+        {
+            characterRigidbody.velocity /= 2;
         }
     }
 }
