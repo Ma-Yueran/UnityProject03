@@ -120,6 +120,7 @@ public class PlayerController : CharacterController
         if (playerInventory.currentWeapon != null)
         {
             playerInventory.currentWeapon.isActive = false;
+            GetAnimationProgress().SetAttackActive = true;
         }
     }
 }

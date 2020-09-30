@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 174adcd9ffa6c9f44986c00686b15df9, type: 3}
   m_Name: PlayerSwordAttackMoveForward 2
   m_EditorClassIdentifier: 
-  speedForward: 3
+  speedForward: 4
   speedBackward: 0
   speedGraph:
     serializedVersion: 2
@@ -20,35 +20,17 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: -11.249351
-      outSlope: -11.249351
+      inSlope: -2
+      outSlope: -2
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.06296545
-      value: 0.29167956
-      inSlope: -5.353213
-      outSlope: -5.353213
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.34896356
-      value: 0.44695508
-      inSlope: -0.6958202
-      outSlope: -0.6958202
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.58
+      time: 0.5
       value: 0
-      inSlope: -1.9345654
-      outSlope: -1.9345654
+      inSlope: -2
+      outSlope: -2
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334

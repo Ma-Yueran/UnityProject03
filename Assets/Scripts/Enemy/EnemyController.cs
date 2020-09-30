@@ -110,7 +110,7 @@ public class EnemyController : CharacterController
     {
         if (enemyInventory.currentWeapon != null)
         {
-            enemyInventory.currentWeapon.isActive = true;
+            enemyInventory.currentWeapon.isActive = isActive;
             enemyInventory.currentWeapon.attackPower = attackPower;
         }
     }
@@ -144,6 +144,7 @@ public class EnemyController : CharacterController
         if (enemyInventory.currentWeapon != null)
         {
             enemyInventory.currentWeapon.isActive = false;
+            GetAnimationProgress().SetAttackActive = true;
         }
     }
 }

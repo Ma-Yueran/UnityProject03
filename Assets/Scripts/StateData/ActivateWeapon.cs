@@ -41,7 +41,6 @@ public class ActivateWeapon : StateData
 
     public override void OnExit(CharacterController controller, Animator animator, AnimatorStateInfo stateInfo)
     {
-        AnimationProgress progress = controller.GetAnimationProgress();
-        progress.ResetProgress();
+
     }
 }

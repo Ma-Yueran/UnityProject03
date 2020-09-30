@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 
@@ -9,8 +10,9 @@ public class EnemyAI : MonoBehaviour
 
     public float distance;
 
-    public float attackIntervalMax;
-    public float attackIntercalMin;
+    public float attackPeriod;
+
+    public float attackInterval;
 
     private float lastAttackTime;
 
@@ -40,8 +42,9 @@ public class EnemyAI : MonoBehaviour
         {
             enemyState.currentState = State.MOVE;
         }
-        else if (Time.time > lastAttackTime + Random.Range(attackIntercalMin, attackIntervalMax))
+        else
         {
+            enemyState.currentState = State.IDLE;
             Attack();
         }
     }
@@ -71,15 +74,17 @@ public class EnemyAI : MonoBehaviour
 
     private void Attack()
     {
-        if (IsCloseEnough())
+        if (Time.time > lastAttackTime + attackInterval)
         {
-            enemyState.attack = true;
+            if (Time.time < lastAttackTime + attackInterval + attackPeriod)
+            {
+                enemyState.attack = true;
+            }
+            else
+            {
+                enemyState.attack = false;
+                lastAttackTime = Time.time;
+            }
         }
-        else
-        {
-            enemyState.attack = false;
-        }
-
-        lastAttackTime = Time.time;
     }
 }
