@@ -27,7 +27,7 @@ public class ActivateWeapon : StateData
             return;
         }
 
-        if (progress.SetAttackActive)
+        if (progress.setAttackActive)
         {
             return;
         }
@@ -35,7 +35,7 @@ public class ActivateWeapon : StateData
         if (stateInfo.normalizedTime > activeTime)
         {
             controller.SetWeaponActive(true, attackPower);
-            progress.SetAttackActive = true;
+            progress.setAttackActive = true;
         }
     }
 

@@ -34,6 +34,7 @@ public class PlayerState : MonoBehaviour
     public bool run;
     public bool attack;
     public bool block;
+    public bool dodge;
 
     [Header("SET THIS VALUE!")]
     public float blockAngle;

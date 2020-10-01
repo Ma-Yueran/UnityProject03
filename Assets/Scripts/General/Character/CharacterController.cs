@@ -1,5 +1,14 @@
 ﻿using UnityEngine;
 
+public enum Direction
+{
+    FORWARD,
+    BACKWARD,
+    LEFT,
+    RIGHT,
+    MIDDLE
+}
+
 public abstract class CharacterController : MonoBehaviour
 {
     public float velocityLimit;
@@ -131,6 +140,64 @@ public abstract class CharacterController : MonoBehaviour
         if (characterRigidbody.velocity.sqrMagnitude > velocityLimit)
         {
             characterRigidbody.velocity /= 2;
+        }
+    }
+
+    /// <summary>
+    /// Gets the dodge direction.
+    /// </summary>
+    /// <returns>the dodge direction</returns>
+    public abstract Direction GetDodgeDirection();
+
+    /// <summary>
+    /// Gets the direction of the damage.
+    /// </summary>
+    /// <param name="angle">the angle of the damage</param>
+    /// <returns></returns>
+    public virtual Direction GetDamageDirection(float angle)
+    {
+        if (Mathf.Abs(angle) < 45)
+        {
+            return Direction.FORWARD;
+        }
+        else if (Mathf.Abs(angle) > 135)
+        {
+            return Direction.BACKWARD;
+        }
+        else if (angle < 0)
+        {
+            return Direction.RIGHT;
+        }
+        else
+        {
+            return Direction.LEFT;
+        }
+    }
+
+    /// <summary>
+    /// Sets the DamageDirection in the animator of the character.
+    /// </summary>
+    /// <param name="angle">the angle of the damage</param>
+    public virtual void SetDamageDirection(float angle)
+    {
+        Direction damageDirection = GetDamageDirection(angle);
+
+        switch (damageDirection)
+        {
+            case Direction.FORWARD:
+                characterAnimator.SetFloat("DamageDirection", 0);
+                return;
+            case Direction.BACKWARD:
+                characterAnimator.SetFloat("DamageDirection", 1);
+                return;
+            case Direction.LEFT:
+                characterAnimator.SetFloat("DamageDirection", 2);
+                return;
+            case Direction.RIGHT:
+                characterAnimator.SetFloat("DamageDirection", 3);
+                return;
+            default:
+                return;
         }
     }
 }

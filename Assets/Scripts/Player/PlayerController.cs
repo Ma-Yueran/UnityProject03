@@ -36,6 +36,7 @@ public class PlayerController : CharacterController
         characterAnimator.SetBool("Run", playerState.run);
         characterAnimator.SetBool("Attack", playerState.attack);
         characterAnimator.SetFloat("HP", playerState.currentHP);
+        characterAnimator.SetBool("Dodge", playerState.dodge);
 
         ControlVelocity();
     }
@@ -117,10 +118,41 @@ public class PlayerController : CharacterController
 
         AddForce(-hit, true);
 
+        SetDamageDirection(angle);
+
         if (playerInventory.currentWeapon != null)
         {
             playerInventory.currentWeapon.isActive = false;
-            GetAnimationProgress().SetAttackActive = true;
+            GetAnimationProgress().setAttackActive = true;
+        }
+    }
+
+    public override Direction GetDodgeDirection()
+    {
+        if (playerState.inputV > 0)
+        {
+            characterAnimator.SetFloat("DodgeDirection", 0);
+            return Direction.FORWARD;
+        } 
+        else if (playerState.inputV < 0)
+        {
+            characterAnimator.SetFloat("DodgeDirection", 1);
+            return Direction.BACKWARD;
+        }
+        else if (playerState.inputH < 0)
+        {
+            characterAnimator.SetFloat("DodgeDirection", 2);
+            return Direction.LEFT;
+        }
+        else if (playerState.inputH > 0)
+        {
+            characterAnimator.SetFloat("DodgeDirection", 3);
+            return Direction.RIGHT;
+        }
+        else
+        {
+            characterAnimator.SetFloat("DodgeDirection", 4);
+            return Direction.MIDDLE;
         }
     }
 }

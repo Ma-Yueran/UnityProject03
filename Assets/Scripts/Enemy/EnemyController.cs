@@ -141,10 +141,17 @@ public class EnemyController : CharacterController
 
         AddForce(-hit, true);
 
+        SetDamageDirection(angle);
+
         if (enemyInventory.currentWeapon != null)
         {
             enemyInventory.currentWeapon.isActive = false;
-            GetAnimationProgress().SetAttackActive = true;
+            GetAnimationProgress().setAttackActive = true;
         }
+    }
+
+    public override Direction GetDodgeDirection()
+    {
+        throw new System.NotImplementedException();
     }
 }

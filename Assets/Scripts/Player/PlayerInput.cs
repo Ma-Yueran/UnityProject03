@@ -5,7 +5,12 @@
 /// </summary>
 public class PlayerInput : MonoBehaviour
 {
+    public float keyReactTime;
+
     private PlayerState playerState;
+
+    private float keyDownTime;
+    private float pressTime;
 
     private void Start()
     {
@@ -23,7 +28,9 @@ public class PlayerInput : MonoBehaviour
 
         UpdatePlayerWeaponState();
 
-        playerState.run = Input.GetKey(KeyCode.LeftShift);
+        UpdateDodge();
+
+        UpdateRun();
 
         playerState.attack = Input.GetMouseButton(0);
 
@@ -65,6 +72,36 @@ public class PlayerInput : MonoBehaviour
             {
                 playerState.weaponState = WeaponState.UNARMED;
             }
+        }
+    }
+
+    private void UpdateDodge()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            keyDownTime = Time.time;
+        }
+        
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            pressTime = Time.time - keyDownTime;
+
+            if (pressTime < keyReactTime)
+            {
+                playerState.dodge = true;
+            }
+        }
+        else
+        {
+            playerState.dodge = false;
+        }
+    }
+
+    private void UpdateRun()
+    {
+        if (Time.time - keyDownTime > keyReactTime)
+        {
+            playerState.run = Input.GetKey(KeyCode.LeftShift);
         }
     }
 }

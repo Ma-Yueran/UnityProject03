@@ -6,7 +6,12 @@ public class AnimationProgress
     /// <summary>
     /// is SetAttack of the CharacterController called.
     /// </summary>
-    public bool SetAttackActive;
+    public bool setAttackActive;
+
+    /// <summary>
+    /// the dodge direction of the character.
+    /// </summary>
+    public Direction dodgeDirection;
 
     /// <summary>
     /// Constructs an AnimationProgress.
@@ -21,6 +26,6 @@ public class AnimationProgress
     /// </summary>
     public void ResetProgress()
     {
-        SetAttackActive = false;
+        setAttackActive = false;
     }
 }
