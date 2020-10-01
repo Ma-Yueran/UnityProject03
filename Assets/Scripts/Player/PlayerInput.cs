@@ -7,6 +7,8 @@ public class PlayerInput : MonoBehaviour
 {
     public float keyReactTime;
 
+    private PlayerController playerController;
+
     private PlayerState playerState;
 
     private float keyDownTime;
@@ -14,6 +16,7 @@ public class PlayerInput : MonoBehaviour
 
     private void Start()
     {
+        playerController = GetComponent<PlayerController>();
         playerState = GetComponent<PlayerState>();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -36,11 +39,11 @@ public class PlayerInput : MonoBehaviour
 
         playerState.block = Input.GetMouseButton(1);
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-        }
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    Cursor.visible = true;
+        //    Cursor.lockState = CursorLockMode.None;
+        //}
     }
 
     private void UpdatePlayerCurrentState()

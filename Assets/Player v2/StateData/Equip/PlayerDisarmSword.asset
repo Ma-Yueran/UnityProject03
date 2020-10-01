@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: PlayerDisarmSword
   m_EditorClassIdentifier: 
   itemName: Sword
-  bodyPart: Spine
-  localPosition: {x: -0.02, y: 0.1909, z: -0.2139}
-  localRoatation: {x: 2.439, y: -0.17, z: -0.016}
+  bodyPart: Hips
+  localPosition: {x: -0.213, y: -0.04, z: -0.031}
+  localRoatation: {x: -8.752, y: -72.76, z: -64.921}

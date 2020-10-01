@@ -127,6 +127,60 @@ public class PlayerController : CharacterController
         }
     }
 
+    public override Direction GetMoveDirection()
+    {
+        if (playerState.inputV > 0)
+        {
+            if (playerState.inputH == 0)
+            {
+                return Direction.FORWARD;
+            }
+
+            if (playerState.inputH > 0)
+            {
+                return Direction.FORWARD_RIGHT;
+            }
+            
+            if (playerState.inputH < 0)
+            {
+                return Direction.FORWARD_LEFT;
+            }
+        }
+
+        if (playerState.inputV < 0)
+        {
+            if (playerState.inputH == 0)
+            {
+                return Direction.BACKWARD;
+            }
+
+            if (playerState.inputH > 0)
+            {
+                return Direction.BACKWARD_RIGHT;
+            }
+
+            if (playerState.inputH < 0)
+            {
+                return Direction.BACKWARD_LEFT;
+            }
+        }
+
+        if (playerState.inputV == 0)
+        {
+            if (playerState.inputH > 0)
+            {
+                return Direction.RIGHT;
+            }
+
+            if (playerState.inputH < 0)
+            {
+                return Direction.LEFT;
+            }
+        }
+
+        return Direction.MIDDLE;
+    }
+
     public override Direction GetDodgeDirection()
     {
         if (playerState.inputV > 0)

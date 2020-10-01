@@ -150,6 +150,11 @@ public class EnemyController : CharacterController
         }
     }
 
+    public override Direction GetMoveDirection()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public override Direction GetDodgeDirection()
     {
         throw new System.NotImplementedException();

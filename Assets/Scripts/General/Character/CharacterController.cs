@@ -6,6 +6,10 @@ public enum Direction
     BACKWARD,
     LEFT,
     RIGHT,
+    FORWARD_LEFT,
+    FORWARD_RIGHT,
+    BACKWARD_LEFT,
+    BACKWARD_RIGHT,
     MIDDLE
 }
 
@@ -140,6 +144,43 @@ public abstract class CharacterController : MonoBehaviour
         if (characterRigidbody.velocity.sqrMagnitude > velocityLimit)
         {
             characterRigidbody.velocity /= 2;
+        }
+    }
+
+    public abstract Direction GetMoveDirection();
+
+    public virtual void SetMoveDirection()
+    {
+        Direction direction = GetMoveDirection();
+
+        switch (direction)
+        {
+            case Direction.FORWARD:
+                characterAnimator.SetFloat("MoveDirection", 0);
+                return;
+            case Direction.BACKWARD:
+                characterAnimator.SetFloat("MoveDirection", 1);
+                return;
+            case Direction.LEFT:
+                characterAnimator.SetFloat("MoveDirection", 2);
+                return;
+            case Direction.RIGHT:
+                characterAnimator.SetFloat("MoveDirection", 3);
+                return;
+            case Direction.FORWARD_LEFT:
+                characterAnimator.SetFloat("MoveDirection", 4);
+                return;
+            case Direction.FORWARD_RIGHT:
+                characterAnimator.SetFloat("MoveDirection", 5);
+                return;
+            case Direction.BACKWARD_LEFT:
+                characterAnimator.SetFloat("MoveDirection", 6);
+                return;
+            case Direction.BACKWARD_RIGHT:
+                characterAnimator.SetFloat("MoveDirection", 7);
+                return;
+            default:
+                return;
         }
     }
 

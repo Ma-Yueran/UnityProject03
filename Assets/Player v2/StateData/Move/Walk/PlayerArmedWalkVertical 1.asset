@@ -10,32 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 174adcd9ffa6c9f44986c00686b15df9, type: 3}
-  m_Name: PlayerSwordAttackMoveForward 1
+  m_Name: PlayerArmedWalkVertical 1
   m_EditorClassIdentifier: 
-  speedForward: 3
-  speedBackward: 0
+  speedForward: 3.5
+  speedBackward: 3
   speedGraph:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: -1.4285715
-      outSlope: -1.4285715
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
+      outWeight: 0
     - serializedVersion: 3
-      time: 0.7
-      value: 0
-      inSlope: -1.4285715
-      outSlope: -1.4285715
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  controllable: 0
+  controllable: 1
