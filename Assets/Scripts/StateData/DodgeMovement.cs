@@ -21,7 +21,10 @@ public class DodgeMovement : StateData
 
     public override void OnEnter(CharacterController controller, Animator animator, AnimatorStateInfo stateInfo)
     {
-        controller.GetAnimationProgress().dodgeDirection = controller.GetDodgeDirection();
+        Direction dodgeDirection = controller.GetDodgeDirection();
+
+        controller.GetAnimationProgress().dodgeDirection = dodgeDirection;
+        controller.SetDodgeDirection(dodgeDirection);
     }
 
     public override void UpdateAbility(CharacterController controller, Animator animator, AnimatorStateInfo stateInfo)

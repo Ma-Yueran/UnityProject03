@@ -147,37 +147,84 @@ public abstract class CharacterController : MonoBehaviour
         }
     }
 
-    public abstract Direction GetMoveDirection();
-
-    public virtual void SetMoveDirection()
+    /// <summary>
+    /// Gets the damage direction.
+    /// </summary>
+    /// <param name="angle">the angle of the damage</param>
+    /// <returns></returns>
+    public virtual Direction GetDamageDirection(float angle)
     {
-        Direction direction = GetMoveDirection();
+        if (Mathf.Abs(angle) < 30)
+        {
+            return Direction.FORWARD;
+        }
+        
+        if  (Mathf.Abs(angle) < 60)
+        {
+            if (angle < 0)
+            {
+                return Direction.FORWARD_RIGHT;
+            }
+
+            return Direction.FORWARD_LEFT;
+        }
+
+        if (Mathf.Abs(angle) < 120)
+        {
+            if (angle < 0)
+            {
+                return Direction.RIGHT;
+            }
+
+            return Direction.LEFT;
+        }
+
+        if (Mathf.Abs(angle) < 150)
+        {
+            if (angle < 0)
+            {
+                return Direction.BACKWARD_RIGHT;
+            }
+
+            return Direction.BACKWARD_LEFT;
+        }
+
+        return Direction.BACKWARD;
+    }
+
+    /// <summary>
+    /// Sets the DamageDirection of the character's controller.
+    /// </summary>
+    /// <param name="angle">the angle of the damage</param>
+    public virtual void SetDamageDirection(float angle)
+    {
+        Direction direction = GetDamageDirection(angle);
 
         switch (direction)
         {
             case Direction.FORWARD:
-                characterAnimator.SetFloat("MoveDirection", 0);
+                characterAnimator.SetFloat("DamageDirection", 0);
                 return;
             case Direction.BACKWARD:
-                characterAnimator.SetFloat("MoveDirection", 1);
+                characterAnimator.SetFloat("DamageDirection", 1);
                 return;
             case Direction.LEFT:
-                characterAnimator.SetFloat("MoveDirection", 2);
+                characterAnimator.SetFloat("DamageDirection", 2);
                 return;
             case Direction.RIGHT:
-                characterAnimator.SetFloat("MoveDirection", 3);
+                characterAnimator.SetFloat("DamageDirection", 3);
                 return;
             case Direction.FORWARD_LEFT:
-                characterAnimator.SetFloat("MoveDirection", 4);
+                characterAnimator.SetFloat("DamageDirection", 4);
                 return;
             case Direction.FORWARD_RIGHT:
-                characterAnimator.SetFloat("MoveDirection", 5);
+                characterAnimator.SetFloat("DamageDirection", 5);
                 return;
             case Direction.BACKWARD_LEFT:
-                characterAnimator.SetFloat("MoveDirection", 6);
+                characterAnimator.SetFloat("DamageDirection", 6);
                 return;
             case Direction.BACKWARD_RIGHT:
-                characterAnimator.SetFloat("MoveDirection", 7);
+                characterAnimator.SetFloat("DamageDirection", 7);
                 return;
             default:
                 return;
@@ -191,11 +238,37 @@ public abstract class CharacterController : MonoBehaviour
     public abstract Direction GetDodgeDirection();
 
     /// <summary>
-    /// Gets the direction of the damage.
+    /// Sets the DodgeDirection in the character's animator.
+    /// </summary>
+    /// <param name="direction">the dodge direction</param>
+    public virtual void SetDodgeDirection(Direction direction)
+    {
+        switch (direction)
+        {
+            case Direction.FORWARD:
+                characterAnimator.SetFloat("DodgeDirection", 0);
+                return;
+            case Direction.BACKWARD:
+                characterAnimator.SetFloat("DodgeDirection", 1);
+                return;
+            case Direction.LEFT:
+                characterAnimator.SetFloat("DodgeDirection", 2);
+                return;
+            case Direction.RIGHT:
+                characterAnimator.SetFloat("DodgeDirection", 3);
+                return;
+            case Direction.MIDDLE:
+                characterAnimator.SetFloat("DodgeDirection", 4);
+                return;
+        }
+    }
+
+    /// <summary>
+    /// Gets the death direction of the character.
     /// </summary>
     /// <param name="angle">the angle of the damage</param>
     /// <returns></returns>
-    public virtual Direction GetDamageDirection(float angle)
+    public virtual Direction GetDeathDirection(float angle)
     {
         if (Mathf.Abs(angle) < 45)
         {
@@ -216,26 +289,26 @@ public abstract class CharacterController : MonoBehaviour
     }
 
     /// <summary>
-    /// Sets the DamageDirection in the animator of the character.
+    /// Sets the DeathDirection in the animator of the character.
     /// </summary>
     /// <param name="angle">the angle of the damage</param>
-    public virtual void SetDamageDirection(float angle)
+    public virtual void SetDeathDirection(float angle)
     {
-        Direction damageDirection = GetDamageDirection(angle);
+        Direction direction = GetDeathDirection(angle);
 
-        switch (damageDirection)
+        switch (direction)
         {
             case Direction.FORWARD:
-                characterAnimator.SetFloat("DamageDirection", 0);
+                characterAnimator.SetFloat("DeathDirection", 0);
                 return;
             case Direction.BACKWARD:
-                characterAnimator.SetFloat("DamageDirection", 1);
+                characterAnimator.SetFloat("DeathDirection", 1);
                 return;
             case Direction.LEFT:
-                characterAnimator.SetFloat("DamageDirection", 2);
+                characterAnimator.SetFloat("DeathDirection", 2);
                 return;
             case Direction.RIGHT:
-                characterAnimator.SetFloat("DamageDirection", 3);
+                characterAnimator.SetFloat("DeathDirection", 3);
                 return;
             default:
                 return;

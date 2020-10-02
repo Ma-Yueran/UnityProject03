@@ -2016,7 +2016,7 @@ MonoBehaviour:
   block: 0
   dodge: 0
   blockAngle: 50
-  maxHP: 100
+  maxHP: 200
   currentHP: 0
 --- !u!114 &972208494
 MonoBehaviour:
@@ -6000,11 +6000,31 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3808880781498180949, guid: e4fce2727576de843930f1dc98b01b2c,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: c09b9a4df9b6a6148afb63c7e0893f63, type: 2}
+    - target: {fileID: 7327718650992334408, guid: e4fce2727576de843930f1dc98b01b2c,
+        type: 3}
+      propertyPath: maxHP
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 7327718650992334413, guid: e4fce2727576de843930f1dc98b01b2c,
         type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 972208496}
+    - target: {fileID: 7327718650992334413, guid: e4fce2727576de843930f1dc98b01b2c,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7327718650992334413, guid: e4fce2727576de843930f1dc98b01b2c,
+        type: 3}
+      propertyPath: attackInterval
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7327718650992334415, guid: e4fce2727576de843930f1dc98b01b2c,
         type: 3}
       propertyPath: m_Name
@@ -6013,7 +6033,7 @@ PrefabInstance:
     - target: {fileID: 7327718650992334415, guid: e4fce2727576de843930f1dc98b01b2c,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7327718650992334420, guid: e4fce2727576de843930f1dc98b01b2c,
         type: 3}

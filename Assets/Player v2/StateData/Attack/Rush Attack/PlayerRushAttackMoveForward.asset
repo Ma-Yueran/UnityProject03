@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 174adcd9ffa6c9f44986c00686b15df9, type: 3}
   m_Name: PlayerRushAttackMoveForward
   m_EditorClassIdentifier: 
-  speedForward: 7
+  speedForward: 4
   speedBackward: 0
   speedGraph:
     serializedVersion: 2
