@@ -314,4 +314,8 @@ public abstract class CharacterController : MonoBehaviour
                 return;
         }
     }
+
+    public abstract void GetTarget();
+
+    public abstract void FollowTarget(float speed, float minDistance, float detectDistance);
 }

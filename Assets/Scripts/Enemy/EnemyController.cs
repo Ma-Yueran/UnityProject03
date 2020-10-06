@@ -155,4 +155,14 @@ public class EnemyController : CharacterController
     {
         throw new System.NotImplementedException();
     }
+
+    public override void GetTarget()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void FollowTarget(float speed, float minDistance, float detectDistance)
+    {
+        throw new System.NotImplementedException();
+    }
 }

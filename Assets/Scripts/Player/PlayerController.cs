@@ -17,6 +17,8 @@ public class PlayerController : CharacterController
 
     private PlayerBody playerBody;
 
+    private Transform target;
+
     private void Start()
     {
         InitializeController();
@@ -149,6 +151,33 @@ public class PlayerController : CharacterController
         else
         {
             return Direction.MIDDLE;
+        }
+    }
+
+    public override void GetTarget()
+    {
+        target = GameObject.FindGameObjectWithTag("Enemy").transform;
+    }
+
+    public override void FollowTarget(float speed, float minDistance, float detectDistance)
+    {
+        Vector3 relativePos = target.position - transform.position;
+
+        if (relativePos.sqrMagnitude > Mathf.Pow(detectDistance, 2))
+        {
+            Rotate(speed, true);
+            MoveVertical(speed, 0, false);
+
+            return;
+        }
+
+        Quaternion rotation =  Quaternion.LookRotation(relativePos);
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, 0.1f);
+
+        if (relativePos.sqrMagnitude > minDistance)
+        {
+            MoveVertical(speed, 0, false);
         }
     }
 }
