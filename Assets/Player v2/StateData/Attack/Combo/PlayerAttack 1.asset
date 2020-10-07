@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc44316495711774aaacdb25aa145467, type: 3}
-  m_Name: PlayerSetNoWeapon
+  m_Script: {fileID: 11500000, guid: 986dcf86846159e4a886c6cf093317e2, type: 3}
+  m_Name: PlayerAttack 1
   m_EditorClassIdentifier: 
-  weapon: null
+  weaponName: Sword
+  attackPower: 3
+  activeTime: 0.3

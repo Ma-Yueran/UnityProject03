@@ -17,6 +17,10 @@ public abstract class CharacterController : MonoBehaviour
 {
     public float velocityLimit;
 
+    protected CharacterState characterState;
+
+    protected CharacterInventory characterInventory;
+
     protected AnimationProgress animationProgress;
 
     protected Animator characterAnimator;
@@ -25,6 +29,8 @@ public abstract class CharacterController : MonoBehaviour
 
     protected void InitializeController()
     {
+        characterState = GetComponent<CharacterState>();
+        characterInventory = GetComponent<CharacterInventory>();
         animationProgress = new AnimationProgress();
         characterAnimator = GetComponentInChildren<Animator>();
         characterRigidbody = GetComponent<Rigidbody>();
@@ -72,30 +78,70 @@ public abstract class CharacterController : MonoBehaviour
     }
 
     /// <summary>
-    /// Sets the current weapon of the character.
-    /// </summary>
-    /// <param name="weaponName">the name of the weapon</param>
-    public abstract void SetWeapon(string weaponName);
-
-    /// <summary>
-    /// Sets the current weapon to be active or inactive, sets the attack power.
-    /// </summary>
-    /// <param name="isActive">active or not</param>
-    /// <param name="attackPower">the attack power</param>
-    public abstract void SetWeaponActive(bool isActive, float attackPower);
-
-    /// <summary>
     /// Sets the current state of the character.
     /// </summary>
     /// <param name="state">the state</param>
     public abstract void SetState(State state);
+
+    public Weapon GetWeapon(string name)
+    {
+        return characterInventory.GetWeapon(name);
+    }
 
     /// <summary>
     /// Takes damage.
     /// </summary>
     /// <param name="angle">the angle of the damage recieved</param>
     /// <param name="power">the power of the damage</param>
-    public abstract void TakeDamage(float angle, float power);
+    public virtual void TakeDamage(AttackInfo attackInfo)
+    {
+        attackInfo.isHit = true;
+
+        SetState(State.DAMAGED);
+
+        float angle = CalcDamageAngle(attackInfo);
+
+        Vector3 hit = new Vector3(-Mathf.Tan(angle * Mathf.Deg2Rad), 0, 1).normalized * attackInfo.attackPower;
+        if (Mathf.Abs(angle) > 90)
+        {
+            hit *= -1;
+        }
+
+        characterAnimator.SetFloat("HitH", hit.x);
+        characterAnimator.SetFloat("HitV", hit.z);
+
+        if (characterState.CanBlock(angle, attackInfo.attackPower))
+        {
+            characterAnimator.SetBool("Block", true);
+        }
+        else
+        {
+            characterState.currentHP -= hit.sqrMagnitude;
+
+            characterAnimator.SetBool("Block", false);
+        }
+
+        AddForce(-hit, true);
+
+        SetDamageDirection(angle);
+        SetDeathDirection(angle);
+    }
+
+    private float CalcDamageAngle(AttackInfo attackInfo)
+    {
+        Vector3 direction = attackInfo.attacker.transform.position - transform.position;
+        direction.y = 0;
+
+        Vector3 directionRight = Vector3.Cross(Vector3.up, direction);
+
+        float angle = Vector3.Angle(transform.forward, direction);
+
+        float sign = Mathf.Sign(Vector3.Dot(transform.forward, directionRight));
+
+        float finalAngle = angle * sign;
+
+        return finalAngle;
+    }
 
     /// <summary>
     /// Adds the given force to the character.

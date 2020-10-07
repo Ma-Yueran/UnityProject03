@@ -11,11 +11,7 @@ public class EnemyController : CharacterController
 {
     private EnemyMovement enemyMovement;
 
-    private EnemyState enemyState;
-
     private EnemyBody enemyBody;
-
-    private EnemyInventory enemyInventory;
 
     private EnemyAI enemyAI;
 
@@ -24,21 +20,21 @@ public class EnemyController : CharacterController
         InitializeController();
 
         enemyMovement = GetComponent<EnemyMovement>();
-        enemyState = GetComponent<EnemyState>();
+        characterState = GetComponent<EnemyState>();
         enemyBody = GetComponent<EnemyBody>();
-        enemyInventory = GetComponent<EnemyInventory>();
+        characterInventory = GetComponent<EnemyInventory>();
         enemyAI = GetComponent<EnemyAI>();
     }
 
     private void Update()
     {
-        characterAnimator.SetInteger("State", enemyState.getCurrentState());
-        characterAnimator.SetInteger("WeaponState", enemyState.getWeaponState());
-        characterAnimator.SetFloat("InputH", enemyState.inputH);
-        characterAnimator.SetFloat("InputV", enemyState.inputV);
-        characterAnimator.SetBool("Run", enemyState.run);
-        characterAnimator.SetBool("Attack", enemyState.attack);
-        characterAnimator.SetFloat("HP", enemyState.currentHP);
+        characterAnimator.SetInteger("State", characterState.getCurrentState());
+        characterAnimator.SetInteger("WeaponState", characterState.getWeaponState());
+        characterAnimator.SetFloat("InputH", characterState.inputH);
+        characterAnimator.SetFloat("InputV", characterState.inputV);
+        characterAnimator.SetBool("Run", characterState.run);
+        characterAnimator.SetBool("Attack", characterState.attack);
+        characterAnimator.SetFloat("HP", characterState.currentHP);
 
         ControlVelocity();
     }
@@ -81,7 +77,7 @@ public class EnemyController : CharacterController
 
     public override void Equip(string itemName, string bodyPartName, Vector3 localPosition, Vector3 localRotation)
     {
-        Item item = enemyInventory.GetItem(itemName);
+        Item item = characterInventory.GetItem(itemName);
         Transform bodyPart = enemyBody.GetBodyPart(bodyPartName);
 
         item.transform.SetParent(bodyPart);
@@ -91,64 +87,7 @@ public class EnemyController : CharacterController
 
     public override void SetState(State state)
     {
-        enemyState.currentState = state;
-    }
-    
-    public override void SetWeapon(string weaponName)
-    {
-        if (weaponName.Equals("null"))
-        {
-            enemyInventory.currentWeapon = null;
-        }
-        else
-        {
-            enemyInventory.SetWeapon(weaponName);
-        }
-    }
-
-    public override void SetWeaponActive(bool isActive, float attackPower)
-    {
-        if (enemyInventory.currentWeapon != null)
-        {
-            enemyInventory.currentWeapon.isActive = isActive;
-            enemyInventory.currentWeapon.attackPower = attackPower;
-        }
-    }
-
-    public override void TakeDamage(float angle, float power)
-    {
-        SetState(State.DAMAGED);
-
-        Vector3 hit = new Vector3(-Mathf.Tan(angle * Mathf.Deg2Rad), 0, 1).normalized * power;
-        if (Mathf.Abs(angle) > 90)
-        {
-            hit *= -1;
-        }
-
-        characterAnimator.SetFloat("HitH", hit.x);
-        characterAnimator.SetFloat("HitV", hit.z);
-
-        if (enemyState.CanBlock(angle, power))
-        {
-            characterAnimator.SetBool("Block", true);
-        }
-        else
-        {
-            enemyState.currentHP -= hit.sqrMagnitude;
-
-            characterAnimator.SetBool("Block", false);
-        }
-
-        AddForce(-hit, true);
-
-        SetDamageDirection(angle);
-        SetDeathDirection(angle);
-
-        if (enemyInventory.currentWeapon != null)
-        {
-            enemyInventory.currentWeapon.isActive = false;
-            GetAnimationProgress().setAttackActive = true;
-        }
+        characterState.currentState = state;
     }
 
     public override Direction GetDodgeDirection()

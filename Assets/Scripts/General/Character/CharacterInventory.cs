@@ -16,13 +16,13 @@ public class CharacterInventory : MonoBehaviour
     /// <summary>
     /// The weapon the character is using.
     /// </summary>
-    public Weapon currentWeapon;
+    public List<Weapon> weapons;
 
     private void Start()
     {
         Item[] items = GetComponentsInChildren<Item>();
         inventory = items.ToList();
-        currentWeapon = null;
+        weapons = new List<Weapon>();
     }
 
     /// <summary>
@@ -43,27 +43,8 @@ public class CharacterInventory : MonoBehaviour
         return null;
     }
 
-    /// <summary>
-    /// Sets the weapon of the character.
-    /// </summary>
-    /// <param name="name">the name of the weapon</param>
-    /// <returns>is the weapon set sucessfully</returns>
-    public bool SetWeapon(string name)
+    public Weapon GetWeapon(string name)
     {
-        Item weaponItem = GetItem(name);
-
-        if (weaponItem != null)
-        {
-            Weapon weapon = weaponItem.GetComponent<Weapon>();
-
-            if (weapon != null)
-            {
-                currentWeapon = weapon;
-
-                return true;
-            }
-        }
-
-        return false;
+        return GetItem(name).GetComponent<Weapon>();
     }
 }
